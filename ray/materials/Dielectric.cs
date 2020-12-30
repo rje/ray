@@ -20,7 +20,7 @@ namespace ray.materials
             var direction = (cannotRefract || Reflectance(cosTheta, refractionRatio) > MathUtils.RandDouble())? 
                 Vec3.Reflect(unitDir, hr.Normal) :
                 Vec3.Refract(unitDir, hr.Normal, refractionRatio);
-            scattered = new Ray(hr.Point, direction);
+            scattered = new Ray(hr.Point, direction, r.Time);
             return true;
         }
 

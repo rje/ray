@@ -51,5 +51,10 @@ namespace ray.core
 
             return x;
         }
+
+        public static int RandomInt(int min, int maxExcl)
+        {
+            return _rand.Value.Next(min, maxExcl);
+        }
     }
 }

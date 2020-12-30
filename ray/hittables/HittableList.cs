@@ -18,8 +18,9 @@ namespace ray.hittables
             var hitAnything = false;
             var closest = tMax;
             
-            foreach(var obj in Objects)
+            for(var i = 0; i < Objects.Count; i++)
             {
+                var obj = Objects[i];
                 if (obj.Hit(r, tMin, tMax, out var recToCheck))
                 {
                     hitAnything = true;
@@ -33,6 +34,25 @@ namespace ray.hittables
 
             hr = tempRec;
             return hitAnything;
+        }
+
+        public bool BoundingBox(double t0, double t1, out Aabb outputBox)
+        {
+            var firstBox = true;
+            outputBox = default(Aabb);
+            
+            foreach(var obj in Objects)
+            {
+                if (!obj.BoundingBox(t0, t1, out var output))
+                {
+                    return false;
+                }
+
+                outputBox = firstBox ? output : Aabb.SurroundingBox(outputBox, output);
+                firstBox = false;
+            }
+
+            return true;
         }
     }
 }

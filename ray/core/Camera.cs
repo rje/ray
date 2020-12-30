@@ -10,8 +10,18 @@ namespace ray.core
         private Vec3 Vertical;
         private double LensRadius;
         private Vec3 u, v, w;
+        private double Time0, Time1;
 
-        public Camera(Vec3 lookFrom, Vec3 lookAt, Vec3 vUp, double vFov, double aspect, double aperture, double focusDist)
+        public Camera(
+            Vec3 lookFrom, 
+            Vec3 lookAt, 
+            Vec3 vUp, 
+            double vFov, 
+            double aspect, 
+            double aperture, 
+            double focusDist,
+            double time0 = 0,
+            double time1 = 0)
         {
             var theta = MathUtils.Deg2Rad(vFov);
             var h = Math.Tan(theta / 2);
@@ -28,6 +38,8 @@ namespace ray.core
             LowerLeftCorner = Origin - Horziontal / 2 - Vertical / 2 - focusDist * w;
             
             LensRadius = aperture / 2;
+            Time0 = time0;
+            Time1 = time1;
         }
 
         public Ray GetRay(double s, double t)
@@ -37,7 +49,8 @@ namespace ray.core
             return new Ray
             {
                 Origin = Origin + offset,
-                Dir = LowerLeftCorner + s * Horziontal + t * Vertical - Origin - offset
+                Dir = LowerLeftCorner + s * Horziontal + t * Vertical - Origin - offset,
+                Time = MathUtils.RandDouble(Time0, Time1)
             };
         }
     }

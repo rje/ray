@@ -103,6 +103,20 @@ namespace ray.core
             }
         }
 
+        public double this[int idx]
+        {
+            get
+            {
+                switch (idx)
+                {
+                    case 0: return x;
+                    case 1: return y;
+                    case 2: return z;
+                    default: throw new IndexOutOfRangeException();
+                }
+            }
+        }
+
         public static double Dot(Vec3 a, Vec3 b)
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;

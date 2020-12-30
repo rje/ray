@@ -15,7 +15,7 @@ namespace ray.materials
                 scatterDir = hr.Normal;
             }
             
-            scattered = new Ray(hr.Point, scatterDir);
+            scattered = new Ray(hr.Point, scatterDir, r.Time);
             attenuation = Albedo;
             return true;
         }

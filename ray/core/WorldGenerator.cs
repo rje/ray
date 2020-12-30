@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ray.hittables;
 using ray.materials;
 
@@ -7,9 +8,9 @@ namespace ray.core
     public static class WorldGenerator
     {
 
-        public static IHittable RandomScene()
+        public static List<IHittable> RandomScene()
         {
-            var world = new HittableList();
+            var world = new List<IHittable>();
 
             var groundMat = new Lambertian {Albedo = new Vec3(0.5, 0.5, 0.5)};
             world.Add(new Sphere {Center = new Vec3(0, -1000, 0), Radius = 1000, Material = groundMat});
@@ -29,11 +30,12 @@ namespace ray.core
                         continue;
                     }
 
-                    if (chooseMat < 0.8)
+                    if (chooseMat < 0.7)
                     {
                         var albedo = Vec3.Random() * Vec3.Random();
                         var mat = new Lambertian {Albedo = albedo};
-                        world.Add(new Sphere {Center = center, Radius = 0.2, Material = mat});
+                        var c2 = center + new Vec3(0, MathUtils.RandDouble(0, 0.5), 0);
+                        world.Add(new MovingSphere {Center0 = center, Center1 = c2, Radius = 0.2, Time0 = 0, Time1 = 1, Material = mat});
                     }
                     else if (chooseMat < 0.95)
                     {

@@ -6,13 +6,15 @@ namespace ray.core
     {
         public Vec3 Origin;
         public Vec3 Dir;
+        public double Time;
 
         public static long RayCount = 0;
 
-        public Ray(Vec3 o, Vec3 d)
+        public Ray(Vec3 o, Vec3 d, double time = 0)
         {
             Origin = o;
             Dir = d;
+            Time = time;
         }
 
         public Vec3 At(double t)
