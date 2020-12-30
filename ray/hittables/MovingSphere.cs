@@ -55,11 +55,14 @@ namespace ray.hittables
             var t = root;
             var point = r.At(t);
             var outwardNormal = (point - center) / Radius;
+            Sphere.GetSphereUV(outwardNormal,out var u, out var v);
             hitRec = new HitRecord
             {
                 T = t,
                 Point = point,
-                Material = Material
+                Material = Material,
+                U = u,
+                V = v
             };
             hitRec.SetFaceNormal(r, outwardNormal);
             return true;

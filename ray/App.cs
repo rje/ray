@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ray.core;
 using ray.hittables;
+using ray.texture;
+using ray.worlds;
 
 namespace ray
 {
@@ -13,27 +15,17 @@ namespace ray
     {
         public static void Main(string[] args)
         {
-            var imageWidth = 1280;
             var aspect = 16.0 / 9.0;
+            var imageWidth = 400;
             var imageHeight = (int) (imageWidth / aspect);
-            var samplesPerPixel = 50;
+            var samplesPerPixel = 100;
             var maxDepth = 50;
-            var lookFrom = new Vec3(13, 2, 3);
-            var lookAt = new Vec3(0, 0, 0);
-            var distToFocus = 10.0;
-            var aperture = 0.1;
-            var cam = new Camera(
-                lookFrom,
-                lookAt,
-                Vec3.Up, 
-                20, 
-                aspect,
-                aperture,
-                distToFocus,
-                0,
-                1
-                );
-            var objects = WorldGenerator.RandomScene();
+            
+            //var generator = new RandomWorld();
+            var generator = new TwoSpheres();
+            
+            var cam = generator.GetCamera(aspect);
+            var objects = generator.Generate();
             var world = new BvhNode(objects, 0, objects.Count, 0, 1);
 
             var start = DateTime.Now;
@@ -41,7 +33,6 @@ namespace ray
             ThreadPool.SetMinThreads(12, 12);
             ThreadPool.SetMaxThreads(12, 12);
             Parallel.For(0, image.Height, y =>
-            //for(var y = 0; y < image.Height; y++)
             {
                 for (var x = 0; x < image.Width; x++)
                 {

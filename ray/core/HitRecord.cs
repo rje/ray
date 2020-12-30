@@ -4,6 +4,8 @@ namespace ray.core
     {
         public Vec3 Point;
         public Vec3 Normal;
+        public double U;
+        public double V;
         public double T;
         public bool IsFrontFace;
         public IMaterial Material;

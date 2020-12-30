@@ -39,11 +39,14 @@ namespace ray.hittables
             var t = root;
             var point = r.At(t);
             var outwardNormal = (point - Center) / Radius;
+            GetSphereUV(outwardNormal,out var u, out var v);
             hitRec = new HitRecord
             {
                 T = t,
                 Point = point,
-                Material = Material
+                Material = Material,
+                U = u,
+                V = v
             };
             hitRec.SetFaceNormal(r, outwardNormal);
             return true;
@@ -57,6 +60,14 @@ namespace ray.hittables
                 Max = Center + new Vec3(Radius, Radius, Radius),
             };
             return true;
+        }
+
+        public static void GetSphereUV(Vec3 p, out double u, out double v)
+        {
+            var theta = Math.Acos(-p.y);
+            var phi = Math.Atan2(-p.z, p.x) + Math.PI;
+            u = phi / (2 * Math.PI);
+            v = theta / Math.PI;
         }
     }
 }

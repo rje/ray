@@ -1,18 +1,19 @@
-using System;
 using System.Collections.Generic;
+using ray.core;
 using ray.hittables;
 using ray.materials;
+using ray.texture;
 
-namespace ray.core
+namespace ray.worlds
 {
-    public static class WorldGenerator
+    public class RandomWorld : IWorldGenerator
     {
-
-        public static List<IHittable> RandomScene()
+        public List<IHittable> Generate()
         {
             var world = new List<IHittable>();
 
-            var groundMat = new Lambertian {Albedo = new Vec3(0.5, 0.5, 0.5)};
+            var checker = new CheckerTexture(new Vec3(0.2, 0.3, 0.1), new Vec3(0.9, 0.9, 0.9));
+            var groundMat = new Lambertian(checker);
             world.Add(new Sphere {Center = new Vec3(0, -1000, 0), Radius = 1000, Material = groundMat});
             
             for(var a = -11; a < 11; a++)
@@ -33,7 +34,7 @@ namespace ray.core
                     if (chooseMat < 0.7)
                     {
                         var albedo = Vec3.Random() * Vec3.Random();
-                        var mat = new Lambertian {Albedo = albedo};
+                        var mat = new Lambertian(albedo);
                         var c2 = center + new Vec3(0, MathUtils.RandDouble(0, 0.5), 0);
                         world.Add(new MovingSphere {Center0 = center, Center1 = c2, Radius = 0.2, Time0 = 0, Time1 = 1, Material = mat});
                     }
@@ -55,13 +56,32 @@ namespace ray.core
             var mat1 = new Dielectric {RefractionIndex = 1.5};
             world.Add(new Sphere {Center = new Vec3(0, 1, 0), Radius = 1.0, Material = mat1});
 
-            var mat2 = new Lambertian {Albedo = new Vec3(0.4, 0.2, 0.1)};
+            var mat2 = new Lambertian(new Vec3(0.4, 0.2, 0.1));
             world.Add(new Sphere {Center = new Vec3(-4, 1, 0), Radius = 1, Material = mat2});
 
             var mat3 = new Metal {Albedo = new Vec3(0.7, 0.6, 0.5), Fuzz = 0.0};
             world.Add(new Sphere {Center = new Vec3(4, 1, 0), Radius = 1, Material = mat3});
 
             return world;
+        }
+        
+        public Camera GetCamera(double aspect) {
+            var lookFrom = new Vec3(13, 2, 3);
+            var lookAt = new Vec3(0, 0, 0);
+            var distToFocus = 10.0;
+            var aperture = 0.1;
+            var cam = new Camera(
+                        lookFrom,
+                        lookAt,
+                        Vec3.Up, 
+                        20, 
+                        aspect,
+                        aperture,
+                        distToFocus,
+                        0,
+                        1
+                        );
+            return cam;
         }
     }
 }

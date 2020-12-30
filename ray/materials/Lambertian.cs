@@ -1,10 +1,21 @@
 using ray.core;
+using ray.texture;
 
 namespace ray.materials
 {
     public class Lambertian : IMaterial
     {
-        public Vec3 Albedo = new Vec3(0.5, 0.5, 0.5);
+        public ITexture Texture;
+
+        public Lambertian(Vec3 albedo)
+        {
+            Texture = new SolidColor{ Color = albedo };
+        }
+
+        public Lambertian(ITexture texture)
+        {
+            Texture = texture;
+        }
         
         public bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
         {
@@ -16,7 +27,7 @@ namespace ray.materials
             }
             
             scattered = new Ray(hr.Point, scatterDir, r.Time);
-            attenuation = Albedo;
+            attenuation = Texture.Value(hr.U, hr.V, hr.Point);
             return true;
         }
     }
