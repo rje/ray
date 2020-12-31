@@ -16,13 +16,12 @@ namespace ray
         public static void Main(string[] args)
         {
             var aspect = 16.0 / 9.0;
-            var imageWidth = 400;
+            var imageWidth = 1280;
             var imageHeight = (int) (imageWidth / aspect);
-            var samplesPerPixel = 100;
-            var maxDepth = 50;
             
             //var generator = new RandomWorld();
-            var generator = new TwoSpheres();
+            //var generator = new TwoSpheres();
+            var generator = new PerlinTest();
             
             var cam = generator.GetCamera(aspect);
             var objects = generator.Generate();
@@ -30,6 +29,8 @@ namespace ray
 
             var start = DateTime.Now;
             var image = new Image(imageWidth, imageHeight);
+            var samplesPerPixel = 100;
+            var maxDepth = 50;
             ThreadPool.SetMinThreads(12, 12);
             ThreadPool.SetMaxThreads(12, 12);
             Parallel.For(0, image.Height, y =>

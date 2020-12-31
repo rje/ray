@@ -59,8 +59,11 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="texture\CheckerTexture.cs" />
         <Compile Include="texture\ITexture.cs" />
+        <Compile Include="texture\NoiseTexture.cs" />
+        <Compile Include="texture\Perlin.cs" />
         <Compile Include="texture\SolidColor.cs" />
         <Compile Include="worlds\IWorldGenerator.cs" />
+        <Compile Include="worlds\PerlinTest.cs" />
         <Compile Include="worlds\RandomWorld.cs" />
         <Compile Include="worlds\TwoSpheres.cs" />
     </ItemGroup>
