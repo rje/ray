@@ -16,12 +16,13 @@ namespace ray
         public static void Main(string[] args)
         {
             var aspect = 16.0 / 9.0;
-            var imageWidth = 1280;
+            var imageWidth = 720;
             var imageHeight = (int) (imageWidth / aspect);
             
             var generator = new RandomWorld();
             //var generator = new TwoSpheres();
             //var generator = new PerlinTest();
+            //var generator = new EarthTest();
             
             var cam = generator.GetCamera(aspect);
             var objects = generator.Generate();
