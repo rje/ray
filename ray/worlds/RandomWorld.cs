@@ -31,12 +31,20 @@ namespace ray.worlds
                         continue;
                     }
 
-                    if (chooseMat < 0.7)
+                    if (chooseMat < 0.35)
                     {
                         var albedo = Vec3.Random() * Vec3.Random();
                         var mat = new Lambertian(albedo);
-                        var c2 = center + new Vec3(0, MathUtils.RandDouble(0, 0.5), 0);
+                        var c2 = center + new Vec3(0, MathUtils.RandDouble(0, 0.2), 0);
                         world.Add(new MovingSphere {Center0 = center, Center1 = c2, Radius = 0.2, Time0 = 0, Time1 = 1, Material = mat});
+                    }
+                    else if (chooseMat < 0.7)
+                    {
+                        var color1= Vec3.Random() * Vec3.Random();
+                        var color2 = Vec3.One - color1;
+                        var scale = MathUtils.RandomInt(3, 10);
+                        var mat = new Lambertian(new NoiseTexture(color1, color2, scale));
+                        world.Add(new Sphere {Center = center, Radius = 0.2, Material = mat});
                     }
                     else if (chooseMat < 0.95)
                     {

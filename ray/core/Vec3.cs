@@ -9,6 +9,7 @@ namespace ray.core
         private double _z;
 
         public static Vec3 Zero => new Vec3(0, 0, 0);
+        public static Vec3 One => new Vec3(1, 1, 1);
         public static Vec3 Up => new Vec3(0, 1, 0);
 
         public Vec3(double x, double y, double z)

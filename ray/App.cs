@@ -19,9 +19,9 @@ namespace ray
             var imageWidth = 1280;
             var imageHeight = (int) (imageWidth / aspect);
             
-            //var generator = new RandomWorld();
+            var generator = new RandomWorld();
             //var generator = new TwoSpheres();
-            var generator = new PerlinTest();
+            //var generator = new PerlinTest();
             
             var cam = generator.GetCamera(aspect);
             var objects = generator.Generate();
