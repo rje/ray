@@ -53,11 +53,16 @@
         <Compile Include="core\MathUtils.cs" />
         <Compile Include="core\Ray.cs" />
         <Compile Include="core\Vec3.cs" />
+        <Compile Include="hittables\Box.cs" />
         <Compile Include="hittables\BvhNode.cs" />
         <Compile Include="hittables\HittableList.cs" />
         <Compile Include="hittables\MovingSphere.cs" />
         <Compile Include="hittables\RectXY.cs" />
+        <Compile Include="hittables\RectXZ.cs" />
+        <Compile Include="hittables\RectYZ.cs" />
+        <Compile Include="hittables\RotateY.cs" />
         <Compile Include="hittables\Sphere.cs" />
+        <Compile Include="hittables\Translate.cs" />
         <Compile Include="materials\Dielectric.cs" />
         <Compile Include="materials\DiffuseLight.cs" />
         <Compile Include="materials\Lambertian.cs" />
@@ -69,6 +74,7 @@
         <Compile Include="texture\NoiseTexture.cs" />
         <Compile Include="texture\Perlin.cs" />
         <Compile Include="texture\SolidColor.cs" />
+        <Compile Include="worlds\CornellBox.cs" />
         <Compile Include="worlds\EarthTest.cs" />
         <Compile Include="worlds\IWorldGenerator.cs" />
         <Compile Include="worlds\PerlinTest.cs" />

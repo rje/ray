@@ -116,6 +116,16 @@ namespace ray.core
                     default: throw new IndexOutOfRangeException();
                 }
             }
+            set
+            {
+                switch (idx)
+                {
+                    case 0: _x = value; break;
+                    case 1: _y = value; break;
+                    case 2: _z = value; break;
+                    default: throw new IndexOutOfRangeException();
+                }
+            }
         }
 
         public static double Dot(Vec3 a, Vec3 b)

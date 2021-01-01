@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ray.core;
 
@@ -23,9 +24,9 @@ namespace ray.hittables
                 var obj = Objects[i];
                 if (obj.Hit(r, tMin, tMax, out var recToCheck))
                 {
-                    hitAnything = true;
                     if (recToCheck.T < closest)
                     {
+                        hitAnything = true;
                         closest = recToCheck.T;
                         tempRec = recToCheck;
                     }
@@ -33,6 +34,8 @@ namespace ray.hittables
             }
 
             hr = tempRec;
+            if (hitAnything && hr.Material == null) 
+                Console.WriteLine("Returning HittableList hitrec with null material");
             return hitAnything;
         }
 

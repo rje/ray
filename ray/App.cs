@@ -15,27 +15,27 @@ namespace ray
     {
         public static void Main(string[] args)
         {
-            var aspect = 16.0 / 9.0;
-            var imageWidth = 1280;
-            var imageHeight = (int) (imageWidth / aspect);
-            
+
+            var aspect = 1;
             //var generator = new RandomWorld();
             //var generator = new TwoSpheres();
             //var generator = new PerlinTest();
             //var generator = new EarthTest();
-            var generator = new SimpleLightTest();
+            //var generator = new SimpleLightTest();
             //var generator = new RectTest();
+            var generator = new CornellBox();
             
+            var imageWidth = 720;
+            var imageHeight = (int) (imageWidth / aspect);
             var cam = generator.GetCamera(aspect);
             var objects = generator.Generate();
             var world = new BvhNode(objects, 0, objects.Count, 0, 1);
 
             var start = DateTime.Now;
             var image = new Image(imageWidth, imageHeight);
-            var samplesPerPixel = 500;
+            var samplesPerPixel = 1000;
             var maxDepth = 50;
-            ThreadPool.SetMinThreads(12, 12);
-            ThreadPool.SetMaxThreads(12, 12);
+            //for(var y = 0; y < image.Height; y++) 
             Parallel.For(0, image.Height, y =>
             {
                 for (var x = 0; x < image.Width; x++)

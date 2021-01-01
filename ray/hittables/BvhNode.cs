@@ -107,12 +107,14 @@ namespace ray.hittables
             if (hitRight)
             {
                 hr = hrr;
+                if (hr.Material == null) Console.WriteLine("Returning HRR with null material");
                 return true;
             }
 
             if (hitLeft)
             {
                 hr = hrl;
+                if (hr.Material == null) Console.WriteLine("Returning HRL with null material");
                 return true;
             }
 
