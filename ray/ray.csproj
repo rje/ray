@@ -56,8 +56,10 @@
         <Compile Include="hittables\BvhNode.cs" />
         <Compile Include="hittables\HittableList.cs" />
         <Compile Include="hittables\MovingSphere.cs" />
+        <Compile Include="hittables\RectXY.cs" />
         <Compile Include="hittables\Sphere.cs" />
         <Compile Include="materials\Dielectric.cs" />
+        <Compile Include="materials\DiffuseLight.cs" />
         <Compile Include="materials\Lambertian.cs" />
         <Compile Include="materials\Metal.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +73,8 @@
         <Compile Include="worlds\IWorldGenerator.cs" />
         <Compile Include="worlds\PerlinTest.cs" />
         <Compile Include="worlds\RandomWorld.cs" />
+        <Compile Include="worlds\RectTest.cs" />
+        <Compile Include="worlds\SimpleLightTest.cs" />
         <Compile Include="worlds\TwoSpheres.cs" />
     </ItemGroup>
     <ItemGroup>

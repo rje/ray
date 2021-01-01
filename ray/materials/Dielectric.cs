@@ -7,7 +7,7 @@ namespace ray.materials
     {
         public double RefractionIndex = 1.0;
         
-        public bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
+        public override bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
         {
             attenuation = new Vec3(1, 1, 1);
             var refractionRatio = hr.IsFrontFace ? (1.0 / RefractionIndex) : RefractionIndex;

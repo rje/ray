@@ -16,13 +16,15 @@ namespace ray
         public static void Main(string[] args)
         {
             var aspect = 16.0 / 9.0;
-            var imageWidth = 720;
+            var imageWidth = 1280;
             var imageHeight = (int) (imageWidth / aspect);
             
-            var generator = new RandomWorld();
+            //var generator = new RandomWorld();
             //var generator = new TwoSpheres();
             //var generator = new PerlinTest();
             //var generator = new EarthTest();
+            var generator = new SimpleLightTest();
+            //var generator = new RectTest();
             
             var cam = generator.GetCamera(aspect);
             var objects = generator.Generate();
@@ -30,7 +32,7 @@ namespace ray
 
             var start = DateTime.Now;
             var image = new Image(imageWidth, imageHeight);
-            var samplesPerPixel = 100;
+            var samplesPerPixel = 500;
             var maxDepth = 50;
             ThreadPool.SetMinThreads(12, 12);
             ThreadPool.SetMaxThreads(12, 12);
@@ -44,7 +46,7 @@ namespace ray
                         var u = (x + MathUtils.RandDouble()) / (imageWidth - 1);
                         var v = (y + MathUtils.RandDouble()) / (imageHeight - 1);
                         var ray = cam.GetRay(u, v);
-                        pixelColor += ray.GetColor(world, maxDepth);
+                        pixelColor += ray.GetColor(world, maxDepth, cam.Background);
                     }
 
                     pixelColor /= samplesPerPixel;

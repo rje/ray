@@ -36,6 +36,18 @@ namespace ray.worlds
                         continue;
                     }
 
+                    if (chooseMat < 0.05)
+                    {
+                        var albedo = Vec3.Random() * Vec3.Random() * 10;
+                        var mat = new DiffuseLight(albedo);
+                        world.Add(new Sphere
+                        {
+                            Center = center,
+                            Material = mat,
+                            Radius = radius
+                        });
+
+                    }
                     if (chooseMat < 0.2)
                     {
                         var albedo = Vec3.Random() * Vec3.Random();
@@ -90,6 +102,7 @@ namespace ray.worlds
                         lookFrom,
                         lookAt,
                         Vec3.Up, 
+                        new Vec3(0.5, 0.7, 1.0),
                         20, 
                         aspect,
                         aperture,

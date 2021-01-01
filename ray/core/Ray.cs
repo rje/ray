@@ -22,7 +22,7 @@ namespace ray.core
             return Origin + Dir * t;
         }
 
-        public Vec3 GetColor(IHittable world, int depth)
+        public Vec3 GetColor(IHittable world, int depth, Vec3 background)
         {
             if (depth <= 0)
             {
@@ -30,19 +30,19 @@ namespace ray.core
             }
 
             Interlocked.Increment(ref RayCount);
-            if (world.Hit(this, 0.001, MathUtils.Infinity, out var hr))
+            if (!world.Hit(this, 0.001, MathUtils.Infinity, out var hr))
             {
-                if (hr.Material.Scatter(this, hr, out var attenuation, out var scattered))
-                {
-                    return attenuation * scattered.GetColor(world, depth - 1);
-                }
+                return background;
+            }
 
-                return Vec3.Zero;
+            var emitted = hr.Material.Emitted(hr.U, hr.V, hr.Point);
+
+            if(hr.Material.Scatter(this, hr, out var attenuation, out var scattered))
+            {
+                return emitted + attenuation * scattered.GetColor(world, depth - 1, background);
             }
             
-            var unitDir = Dir.Normalized();
-            var t = 0.5 * (unitDir.y + 1.0);
-            return new Vec3(1, 1, 1) * (1.0 - t) + new Vec3(0.5, 0.7, 1.0) * t;
+            return emitted;
         }
     }
 }

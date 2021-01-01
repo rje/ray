@@ -7,7 +7,7 @@ namespace ray.materials
         public Vec3 Albedo = new Vec3(0.5, 0.5, 0.5);
         public double Fuzz = 0.5;
         
-        public bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
+        public override bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
         {
             var reflected = Vec3.Reflect(r.Dir.Normalized(), hr.Normal);
             scattered = new Ray(hr.Point, reflected + Fuzz * Vec3.RandomInUnitSphere(), r.Time);

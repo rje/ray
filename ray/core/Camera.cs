@@ -5,6 +5,8 @@ namespace ray.core
     public class Camera
     {
         public Vec3 Origin;
+        public Vec3 Background;
+        
         private Vec3 LowerLeftCorner;
         private Vec3 Horziontal;
         private Vec3 Vertical;
@@ -16,6 +18,7 @@ namespace ray.core
             Vec3 lookFrom, 
             Vec3 lookAt, 
             Vec3 vUp, 
+            Vec3 background,
             double vFov, 
             double aspect, 
             double aperture, 
@@ -37,6 +40,7 @@ namespace ray.core
             Vertical = focusDist * viewportHeight * v;
             LowerLeftCorner = Origin - Horziontal / 2 - Vertical / 2 - focusDist * w;
             
+            Background = background;
             LensRadius = aperture / 2;
             Time0 = time0;
             Time1 = time1;
@@ -47,11 +51,11 @@ namespace ray.core
             var rd = LensRadius * Vec3.RandomInUnitDisk();
             var offset = u * rd.x + v * rd.y;
             return new Ray
-            {
-                Origin = Origin + offset,
-                Dir = LowerLeftCorner + s * Horziontal + t * Vertical - Origin - offset,
-                Time = MathUtils.RandDouble(Time0, Time1)
-            };
+            (
+                Origin + offset,
+                LowerLeftCorner + s * Horziontal + t * Vertical - Origin - offset,
+                MathUtils.RandDouble(Time0, Time1)
+            );
         }
     }
 }

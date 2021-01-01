@@ -6,41 +6,45 @@ using ray.texture;
 
 namespace ray.worlds
 {
-    public class PerlinTest : IWorldGenerator
+    public class RectTest : IWorldGenerator
     {
         public List<IHittable> Generate()
         {
+            var tex = new NoiseTexture(Vec3.One, Vec3.Zero, 4);
+            var mat = new Lambertian(tex);
             var toReturn = new List<IHittable>();
-
-            var perTex = new NoiseTexture(4);
+            
             toReturn.Add(new Sphere
             {
                 Center = new Vec3(0, -1000, 0),
                 Radius = 1000,
-                Material = new Lambertian(perTex)
+                Material = mat
             });
             
             toReturn.Add(new Sphere
             {
                 Center = new Vec3(0, 2, 0),
                 Radius = 2,
-                Material = new Lambertian(perTex)
+                Material = mat
             });
+
+            toReturn.Add(
+                new RectXY(0, 5, 0, 5, -2, new Lambertian(new Vec3(1, 0, 1)))); 
             return toReturn;
         }
 
         public Camera GetCamera(double aspect)
         {
-            var lookFrom = new Vec3(13, 2, 3);
-            var lookAt = new Vec3(0, 0, 0);
+            var lookFrom = new Vec3(26, 3, 6);
+            var lookAt = new Vec3(0, 2, 0);
             var distToFocus = 10.0;
-            var aperture = 0.1;
+            var aperture = 0.0;
             var cam = new Camera(
                 lookFrom,
                 lookAt,
                 Vec3.Up,
-                new Vec3(0.5, 0.7, 1.0),
-                20,
+                new Vec3(0.5, 0.8, 1.0),
+                20, 
                 aspect,
                 aperture,
                 distToFocus,

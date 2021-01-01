@@ -17,7 +17,7 @@ namespace ray.materials
             Texture = texture;
         }
         
-        public bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
+        public override bool Scatter(Ray r, HitRecord hr, out Vec3 attenuation, out Ray scattered)
         {
             var scatterDir = hr.Normal + Vec3.RandomUnitVector();
 

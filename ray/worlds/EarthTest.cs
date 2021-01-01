@@ -32,6 +32,7 @@ namespace ray.worlds
                 lookFrom,
                 lookAt,
                 Vec3.Up,
+                new Vec3(0.5, 0.7, 1.0),
                 20,
                 aspect,
                 aperture,

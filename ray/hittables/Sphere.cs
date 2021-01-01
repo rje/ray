@@ -31,7 +31,7 @@ namespace ray.hittables
                 root = (-halfB + sqrtd) / a;
                 if (root < tMin || tMax < root)
                 {
-                    hitRec = default(HitRecord);
+                    hitRec = default;
                     return false;
                 }
             }
