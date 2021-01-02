@@ -5,7 +5,7 @@ using ray.materials;
 
 namespace ray.worlds
 {
-    public class CornellBox : IWorldGenerator
+    public class CornellSmoke : IWorldGenerator
     {
         public List<IHittable> Generate()
         {
@@ -14,12 +14,12 @@ namespace ray.worlds
             var red = new Lambertian(new Vec3(0.65, 0.05, 0.05));
             var white = new Lambertian(new Vec3(0.73, 0.73, 0.73));
             var green = new Lambertian(new Vec3(0.12, 0.45, 0.15));
-            var light = new DiffuseLight(new Vec3(15, 15, 15));
+            var light = new DiffuseLight(new Vec3(7, 7, 7));
             
             toReturn.Add(new RectYZ(0, 555, 0, 555, 555, green));
             toReturn.Add(new RectYZ(0, 555, 0, 555, 0, red));
             
-            toReturn.Add(new RectXZ(213, 343, 227, 332, 554, light));
+            toReturn.Add(new RectXZ(113, 443, 127, 432, 554, light));
             toReturn.Add(new RectXZ(0, 555, 0, 555, 0, white));
             toReturn.Add(new RectXZ(0, 555, 0, 555, 555, white));
             
@@ -31,7 +31,7 @@ namespace ray.worlds
                 white);
             box1 = new RotateY(box1, 15);
             box1 = new Translate(box1, new Vec3(265, 0, 295));
-            toReturn.Add(box1);
+            toReturn.Add(new ConstantMedium(box1, 0.01, Vec3.Zero));
             
             IHittable box2 = new Box(
                 new Vec3(0, 0, 0),
@@ -39,7 +39,7 @@ namespace ray.worlds
                 white);
             box2 = new RotateY(box2, -18);
             box2 = new Translate(box2, new Vec3(130, 0, 65));
-            toReturn.Add(box2);
+            toReturn.Add(new ConstantMedium(box2, 0.01, Vec3.One));
             
             return toReturn;
         }

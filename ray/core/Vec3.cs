@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ray.core
 {
@@ -19,9 +20,23 @@ namespace ray.core
             _z = z;
         }
 
-        public double x => _x;
-        public double y => _y;
-        public double z => _z;
+        public double x
+        {
+            get => _x;
+            set => _x = value;
+        }
+
+        public double y
+        {
+            get => _y;
+            set => _y = value;
+        }
+
+        public double z
+        {
+            get => _z;
+            set => _z = value;
+        }
 
         public double r => _x;
         public double g => _y;
@@ -104,6 +119,39 @@ namespace ray.core
             }
         }
 
+        public static List<Vec3> GenerateWhite2DNoise(int cellDim)
+        {
+            var total = cellDim * cellDim;
+            var toReturn = new List<Vec3>();
+
+            for (var i = 0; i < total; i++)
+            {
+                toReturn.Add(new Vec3(MathUtils.RandDouble(), MathUtils.RandDouble(), 0));
+            }
+
+            return toReturn;
+        }
+
+        public static List<Vec3> GenerateJittered2DNoise(int cellDim)
+        {
+            var toReturn = new List<Vec3>();
+            var range = 1.0 / cellDim;
+            var rangeOver2 = range / 2.0;
+            for (var y = 0; y < cellDim; y++)
+            {
+                var baseY = y * range + rangeOver2;
+                for (var x = 0; x < cellDim; x++)
+                {
+                    var baseX = x * range + rangeOver2;
+                    var nx = baseX + MathUtils.RandDouble(-rangeOver2, rangeOver2);
+                    var ny = baseY + MathUtils.RandDouble(-rangeOver2, rangeOver2);
+                    toReturn.Add(new Vec3(nx, ny, 0));
+                }
+            }
+
+            return toReturn;
+        }
+
         public double this[int idx]
         {
             get
@@ -184,6 +232,18 @@ namespace ray.core
         public override string ToString()
         {
             return $"({x:0.0000}, {y:0.0000}, {z:0.0000})";
+        }
+
+        public static List<double> GenerateConstantSampleWeights(int cellDim)
+        {
+            var toReturn = new List<double>();
+            var totalDim = cellDim * cellDim;
+            for (var i = 0; i < totalDim; i++)
+            {
+                toReturn.Add(1.0 / totalDim);
+            }
+
+            return toReturn;
         }
     }
 }

@@ -37,12 +37,13 @@ namespace ray.core
 
             var emitted = hr.Material.Emitted(hr.U, hr.V, hr.Point);
 
-            if(hr.Material.Scatter(this, hr, out var attenuation, out var scattered))
+            if(!hr.Material.Scatter(this, hr, out var attenuation, out var scattered))
             {
-                return emitted + attenuation * scattered.GetColor(world, depth - 1, background);
+                return emitted;
             }
             
-            return emitted;
+            return emitted + attenuation * scattered.GetColor(world, depth - 1, background);
+            
         }
     }
 }

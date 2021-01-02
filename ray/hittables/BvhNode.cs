@@ -13,7 +13,25 @@ namespace ray.hittables
 
         public BvhNode(List<IHittable> srcObjects, int start, int end, double t0, double t1)
         {
-            var axis = MathUtils.RandomInt(0, 3);
+            
+            var min = new Vec3(MathUtils.Infinity, MathUtils.Infinity, MathUtils.Infinity);
+            var max = new Vec3(-MathUtils.Infinity, -MathUtils.Infinity, -MathUtils.Infinity);
+            for (var i = start; i < end; i++)
+            {
+                srcObjects[i].BoundingBox(t0, t1, out var box);
+                if (box.Min.x < min.x) min.x = box.Min.x;
+                if (box.Min.y < min.y) min.y = box.Min.y;
+                if (box.Min.z < min.z) min.z = box.Min.z;
+                if (box.Max.x > max.x) max.x = box.Max.x;
+                if (box.Max.y > max.y) max.y = box.Max.y;
+                if (box.Max.z > max.z) max.z = box.Max.z;
+            }
+
+            var diffs = max - min;
+            var axis = 0;
+            if (diffs.y > diffs.x && diffs.y > diffs.z) axis = 1;
+            if (diffs.z > diffs.x && diffs.z > diffs.y) axis = 2;
+            
             IComparer<IHittable> comparator;
             switch (axis)
             {

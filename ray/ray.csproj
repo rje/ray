@@ -55,6 +55,7 @@
         <Compile Include="core\Vec3.cs" />
         <Compile Include="hittables\Box.cs" />
         <Compile Include="hittables\BvhNode.cs" />
+        <Compile Include="hittables\ConstantMedium.cs" />
         <Compile Include="hittables\HittableList.cs" />
         <Compile Include="hittables\MovingSphere.cs" />
         <Compile Include="hittables\RectXY.cs" />
@@ -65,6 +66,7 @@
         <Compile Include="hittables\Translate.cs" />
         <Compile Include="materials\Dielectric.cs" />
         <Compile Include="materials\DiffuseLight.cs" />
+        <Compile Include="materials\Isotropic.cs" />
         <Compile Include="materials\Lambertian.cs" />
         <Compile Include="materials\Metal.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +77,10 @@
         <Compile Include="texture\Perlin.cs" />
         <Compile Include="texture\SolidColor.cs" />
         <Compile Include="worlds\CornellBox.cs" />
+        <Compile Include="worlds\CornellSmoke.cs" />
         <Compile Include="worlds\EarthTest.cs" />
         <Compile Include="worlds\IWorldGenerator.cs" />
+        <Compile Include="worlds\NextWeekScene.cs" />
         <Compile Include="worlds\PerlinTest.cs" />
         <Compile Include="worlds\RandomWorld.cs" />
         <Compile Include="worlds\RectTest.cs" />

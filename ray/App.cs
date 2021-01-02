@@ -24,7 +24,9 @@ namespace ray
             //var generator = new EarthTest();
             //var generator = new SimpleLightTest();
             //var generator = new RectTest();
-            var generator = new CornellBox();
+            //var generator = new CornellBox();
+            //var generator = new CornellSmoke();
+            var generator = new NextWeekScene();
             
             var imageWidth = 400;
             var imageHeight = (int) (imageWidth / aspect);
@@ -34,7 +36,7 @@ namespace ray
 
             var start = DateTime.Now;
             var image = new Image(imageWidth, imageHeight);
-            var samplesPerPixel = 500;
+            var samplesPerPixel = 1024;
             var maxDepth = 50;
             var linesRemaining = imageHeight;
             //for(var y = 0; y < image.Height; y++) 
@@ -44,15 +46,17 @@ namespace ray
                 for (var x = 0; x < image.Width; x++)
                 {
                     Vec3 pixelColor = Vec3.Zero;
-                    for (var i = 0; i < samplesPerPixel; i++)
+                    //var sampleOffsets = Vec3.GenerateWhite2DNoise((int) Math.Sqrt(samplesPerPixel));
+                    var sampleOffsets = Vec3.GenerateJittered2DNoise((int)Math.Sqrt(samplesPerPixel));
+                    var sampleWeights = Vec3.GenerateConstantSampleWeights((int) Math.Sqrt(samplesPerPixel));
+                    for (var i = 0; i < sampleOffsets.Count; i++)
                     {
-                        var u = (x + MathUtils.RandDouble()) / (imageWidth - 1);
-                        var v = (y + MathUtils.RandDouble()) / (imageHeight - 1);
+                        var u = (x + sampleOffsets[i].x) / (imageWidth - 1);
+                        var v = (y + sampleOffsets[i].y) / (imageHeight - 1);
                         var ray = cam.GetRay(u, v);
-                        pixelColor += ray.GetColor(world, maxDepth, cam.Background);
+                        pixelColor += ray.GetColor(world, maxDepth, cam.Background) * sampleWeights[i];
                     }
 
-                    pixelColor /= samplesPerPixel;
                     image.SetPixel(x, y, pixelColor.GammaCorrected());
                 }
 
