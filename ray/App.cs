@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using ray.core;
@@ -33,8 +34,9 @@ namespace ray
 
             var start = DateTime.Now;
             var image = new Image(imageWidth, imageHeight);
-            var samplesPerPixel = 1000;
+            var samplesPerPixel = 5000;
             var maxDepth = 50;
+            var linesRemaining = imageHeight;
             //for(var y = 0; y < image.Height; y++) 
             Parallel.For(0, image.Height, y =>
             {
@@ -53,7 +55,8 @@ namespace ray
                     image.SetPixel(x, y, pixelColor.GammaCorrected());
                 }
 
-                Console.WriteLine($"Finished line {y}");
+                Interlocked.Decrement(ref linesRemaining);
+                Console.WriteLine($"Lines remaining: {linesRemaining}");
             });
 
             var end = DateTime.Now;
