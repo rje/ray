@@ -26,7 +26,7 @@ namespace ray
             //var generator = new RectTest();
             var generator = new CornellBox();
             
-            var imageWidth = 720;
+            var imageWidth = 400;
             var imageHeight = (int) (imageWidth / aspect);
             var cam = generator.GetCamera(aspect);
             var objects = generator.Generate();
@@ -34,12 +34,13 @@ namespace ray
 
             var start = DateTime.Now;
             var image = new Image(imageWidth, imageHeight);
-            var samplesPerPixel = 5000;
+            var samplesPerPixel = 500;
             var maxDepth = 50;
             var linesRemaining = imageHeight;
             //for(var y = 0; y < image.Height; y++) 
             Parallel.For(0, image.Height, y =>
             {
+                var lineStart = DateTime.Now;
                 for (var x = 0; x < image.Width; x++)
                 {
                     Vec3 pixelColor = Vec3.Zero;
@@ -56,7 +57,8 @@ namespace ray
                 }
 
                 Interlocked.Decrement(ref linesRemaining);
-                Console.WriteLine($"Lines remaining: {linesRemaining}");
+                var lineTime = DateTime.Now - lineStart;
+                Console.WriteLine($"Lines remaining: {linesRemaining}, last line time: {lineTime}");
             });
 
             var end = DateTime.Now;
